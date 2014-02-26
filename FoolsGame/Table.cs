@@ -8,7 +8,7 @@ namespace FoolsGame
 {
     class Table
     {
-        public List<Tuple<Card, Card>> tablePosition
+        public List<Tuple<Card, Card>> TablePosition
         {
             get;
             set;
