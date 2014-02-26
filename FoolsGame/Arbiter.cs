@@ -8,9 +8,12 @@ namespace FoolsGame
 {
     class Arbiter
     {
-        public void IsPossibleTurn(); //etc
+        public void IsPossibleTurn()
+        {
+            return;
+        }
 
-        public Card[] FormInitialPack()
+        public List<Card> FormInitialPack()
         {
             var pack = new List<Card>(); //try to make a pack
             foreach (Suit suit in (Suit[])Enum.GetValues(typeof(Suit)))
@@ -19,7 +22,7 @@ namespace FoolsGame
                     Card card = new Card(suit, nominal);
                     pack.Add(card);
                 }
-            return pack.ToArray();
+            return pack;
         }
     }
 }
