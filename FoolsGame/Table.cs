@@ -8,7 +8,7 @@ namespace FoolsGame
 {
     class Table //shit by FoKycHuK. Не меняйте код позязя не сказав мне :3 спасибо.
     {
-        class PairCard // Вместо Tuple
+        private class PairCard // Вместо Tuple
         {
             private Card offCard;
             public Card OffCard
@@ -36,9 +36,9 @@ namespace FoolsGame
         }
         public void AddDefCard(Card defCard, int num)
         {
-            tablePosition[num].DefCard = defCard;
+            tablePosition[num].DefCard = defCard; 
         }
-        public int HowMuch() //кол-во карт на столе
+        public int HowMuch()
         {
             return tablePosition.Count;
         }
