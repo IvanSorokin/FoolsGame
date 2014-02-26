@@ -6,12 +6,49 @@ using System.Threading.Tasks;
 
 namespace FoolsGame
 {
-    class Table
+    class Table //shit by FoKycHuK. Не меняйте код позязя не сказав мне :3 спасибо.
     {
-        public List<Tuple<Card, Card>> TablePosition
+        class PairCard // Вместо Tuple
         {
-            get;
-            set;
+            private Card offCard;
+            public Card OffCard
+            {
+                get { return offCard; }
+                set { offCard = value; }
+            }
+            private Card defCard;
+            public Card DefCard
+            {
+                get { return defCard; }
+                set { defCard = value; }
+            }
+            public bool IsBeaten()
+            {
+                return defCard != null;
+            }
+        }
+        private List<PairCard> tablePosition; //скрытый лист, содержащий, собсно, пары.
+        public void AddOffCard(Card offCard) //добавление карты в лист, нападение. 
+        {
+            var card = new PairCard();  //может, можно проще?
+            card.OffCard = offCard;
+            tablePosition.Add(card);
+        }
+        public void AddDefCard(Card defCard, int num)
+        {
+            tablePosition[num].DefCard = defCard;
+        }
+        public int HowMuch() //кол-во карт на столе
+        {
+            return tablePosition.Count;
+        }
+        public void Clear()
+        {
+            tablePosition.Clear();
+        }
+        public List<PairCard> TablePosition
+        {
+            get {return tablePosition;}
         }
     }
 }
