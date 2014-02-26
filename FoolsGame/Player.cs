@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace FoolsGame
 {
-    class Program
+    interface IPlayer
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Let's begin!");
-        }
+        void FirstMove();
+        void AdditionalMove();
+        void Defend();
+    }
+
+    class Player
+    {
     }
 }
