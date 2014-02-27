@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +8,8 @@ namespace FoolsGame
 {
     class Table //shit by FoKycHuK. Не меняйте код позязя не сказав мне :3 спасибо.
     {
-        private class PairCard // Вместо Tuple
+
+        public class PairCard // Вместо Tuple
         {
             private Card offCard;
             public Card OffCard
@@ -27,7 +28,7 @@ namespace FoolsGame
                 return defCard != null;
             }
         }
-        private List<PairCard> tablePosition; //скрытый лист, содержащий, собсно, пары.
+        private List<PairCard> tablePosition = new List<PairCard>(); //скрытый лист, содержащий, собсно, пары.
         public void AddOffCard(Card offCard) //добавление карты в лист, нападение. 
         {
             var card = new PairCard();  //может, можно проще?
