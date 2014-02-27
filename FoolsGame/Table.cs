@@ -8,26 +8,6 @@ namespace FoolsGame
 {
     class Table //shit by FoKycHuK. Не меняйте код позязя не сказав мне :3 спасибо.
     {
-
-        public class PairCard // Вместо Tuple
-        {
-            private Card offCard;
-            public Card OffCard
-            {
-                get { return offCard; }
-                set { offCard = value; }
-            }
-            private Card defCard;
-            public Card DefCard
-            {
-                get { return defCard; }
-                set { defCard = value; }
-            }
-            public bool IsBeaten()
-            {
-                return defCard != null;
-            }
-        }
         private List<PairCard> tablePosition = new List<PairCard>(); //скрытый лист, содержащий, собсно, пары.
         public void AddOffCard(Card offCard) //добавление карты в лист, нападение. 
         {
@@ -50,6 +30,25 @@ namespace FoolsGame
         public List<PairCard> TablePosition
         {
             get {return tablePosition;}
+        }
+    }
+    class PairCard // Вместо Tuple
+    {
+        private Card offCard;
+        public Card OffCard
+        {
+            get { return offCard; }
+            set { offCard = value; }
+        }
+        private Card defCard;
+        public Card DefCard
+        {
+            get { return defCard; }
+            set { defCard = value; }
+        }
+        public bool IsBeaten()
+        {
+            return defCard != null;
         }
     }
 }
