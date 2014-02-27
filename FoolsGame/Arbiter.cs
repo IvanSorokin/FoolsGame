@@ -8,7 +8,6 @@ namespace FoolsGame
 {
     class Arbiter
     {
-
         public List<Card> FormInitialPack()
         {
             var pack = new List<Card>(); //try to make a pack
