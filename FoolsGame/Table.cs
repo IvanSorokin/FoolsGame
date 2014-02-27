@@ -31,7 +31,7 @@ namespace FoolsGame
         private List<PairCard> tablePosition = new List<PairCard>(); //скрытый лист, содержащий, собсно, пары.
         public void AddOffCard(Card offCard) //добавление карты в лист, нападение. 
         {
-            var card = new PairCard();  //может, можно проще?
+            var card = new PairCard();  //может, можно проще? - отлично же, ну
             card.OffCard = offCard;
             tablePosition.Add(card);
         }
