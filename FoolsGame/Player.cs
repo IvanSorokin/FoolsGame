@@ -14,9 +14,9 @@ namespace FoolsGame
         void Defend(); //player's reaction if he is under attack
     }
 
-    class Player:IPlayer
+    class Player//:IPlayer
     {
-        public List<Card> hand;
+        public List<Card> hand = new List<Card>();
         public DefenseInfo defenseInfo;
         //and his methods
         //The most stupid bot ever.

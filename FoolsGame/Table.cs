@@ -11,9 +11,7 @@ namespace FoolsGame
         private List<PairCard> tablePosition = new List<PairCard>(); //скрытый лист, содержащий, собсно, пары.
         public void AddOffCard(Card offCard) //добавление карты в лист, нападение. 
         {
-            var card = new PairCard();  //может, можно проще? - отлично же, ну
-            card.OffCard = offCard;
-            tablePosition.Add(card);
+            tablePosition.Add(new PairCard { OffCard = offCard });
         }
         public void AddDefCard(Card defCard, int num)
         {
@@ -34,21 +32,19 @@ namespace FoolsGame
     }
     class PairCard // Вместо Tuple
     {
-        private Card offCard;
         public Card OffCard
         {
-            get { return offCard; }
-            set { offCard = value; }
+            get;
+            set;
         }
-        private Card defCard;
         public Card DefCard
         {
-            get { return defCard; }
-            set { defCard = value; }
+            get;
+            set;
         }
         public bool IsBeaten()
         {
-            return defCard != null;
+            return DefCard != null;
         }
     }
 }
