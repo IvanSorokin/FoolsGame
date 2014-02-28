@@ -9,9 +9,9 @@ namespace FoolsGame
     public enum Move {TakeCards, Transfer, Defend};
     interface IPlayer
     {
-        void FirstMove(); //offense realization
-        void AdditionalMove(); //additional moves if possible
-        void Defend(); //player's reaction if he is under attack
+        void FirstMove(int enemyCardCount); //offense realization
+        void AdditionalMove(int enemyCardCount); //additional moves if possible
+        void Defend(Table table); //player's reaction if he is under attack
     }
 
     class Player//:IPlayer
