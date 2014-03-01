@@ -16,7 +16,7 @@ namespace FoolsGame
         {
             var arbiter = new Arbiter();
             var pack = arbiter.FormInitialPack();
-            trumpCard = pack[pack.Count - 1]; // change index for zero
+            trumpCard = pack[0];
         }
     }
 }

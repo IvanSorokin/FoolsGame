@@ -28,7 +28,7 @@ namespace FoolsGame
 			return pack; 
         }
 
-        public bool IsPossibleMove(List<Card> playerHand, Table prevTable, Table desirableTable) //rename to TryToMove
+        public bool TryToMove(List<Card> playerHand, Table prevTable, Table desirableTable)
         {
             var removedCards = new List<Card>(); //check if all offcards were beaten
             foreach (var pairOfCard in desirableTable.TablePosition)
