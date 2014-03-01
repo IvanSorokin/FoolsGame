@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace FoolsGame
 {
-    public enum Suit { Spades, Hearts, Diamonds, Clubs };
-    public enum Nominal { Ace = 8, King = 7, Queen = 6, Jack = 5, Ten = 4, Nine = 3, Eight = 2, Seven = 1, Six = 0};
+    public enum Suit { spades, hearts, diamonds, clubs };
+    public enum Nominal { AAce = 8, KKing = 7, QQueen = 6, JJack = 5, TTen = 4, N9ine = 3, E8ight = 2, S7even = 1, S6hest = 0};
 	//digits for more comfortable comp-s!
 
     public class Card
