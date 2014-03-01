@@ -28,16 +28,40 @@ namespace FoolsGame
 			return pack; 
         }
 
-        public bool IsPossibleMove(List<Card> playerHand, Table table)
+        public bool IsPossibleMove(List<Card> playerHand, Table prevTable, Table desirableTable) //rename to TryToMove
         {
+            var removedCards = new List<Card>(); //check if all offcards were beaten
+            foreach (var pairOfCard in desirableTable.TablePosition)
+                if (playerHand.Contains(pairOfCard.DefCard)) removedCards.Add(pairOfCard.DefCard);
+            if (removedCards.Count == desirableTable.TablePosition.Count)
+            {
+                foreach (var e in removedCards)
+                    playerHand.Remove(e);
+                return true;
+            }
+            else //if he transfer a card?
+            {
+                if (desirableTable.TablePosition.Count - prevTable.TablePosition.Count == 1)
+                    if (playerHand.Contains(desirableTable.TablePosition[1].OffCard))
+                    {
+                        playerHand.Remove(desirableTable.TablePosition[1].OffCard);
+                        return true;
+                    }
+            }
             //looking through player's hand and table position and checking
             //and then make a decision: allow this turn or ban this player for cheating
             //player give his hand and table position which he wanted to make*
-            return true;
+            return false;
         }
 
-        public void GiveCardsToPlayer (Player player)
+        public void GiveCardsToPlayer (Player player, List<Card> pack)
         {
+            while (player.hand.Count < 6)
+            {
+                var card = pack[pack.Count - 1];
+                player.hand.Add(card);
+                pack.Remove(card);
+            }
             //append players hand with cards if necessary
         }
 
