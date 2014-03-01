@@ -10,14 +10,14 @@ namespace FoolsGame
     {
         public List<Card> FormInitialPack()
         {
-            var pack = new List<Card>(); //try to make a pack
+			var pack = new List<Card>(); //try to make a pack
             foreach (Suit suit in (Suit[])Enum.GetValues(typeof(Suit)))
                 foreach (Nominal nominal in (Nominal[])Enum.GetValues(typeof(Nominal)))
                 {
                     Card card = new Card(suit, nominal);
                     pack.Add(card);
                 }
-            return pack; //return a pack WITHOUT random, like a stock pack
+			return pack; //return a pack WITHOUT random, like a stock pack
         }
 
         public List<Card> RandomizePack( List<Card> initPack)
