@@ -33,12 +33,43 @@ namespace FoolsGame
 
         public Table FirstMove(int enemyCardCount, List<Card> myHand)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            var cardToMove = new Card(Program.trumpCard.suit, Nominal.Ace);
+            foreach (var value in myHand)
+                if (value.suit != Program.trumpCard.suit && value.nominal <= cardToMove.nominal)
+                    cardToMove = value;
+            if (cardToMove.suit == Program.trumpCard.suit)
+                foreach (var value in myHand)
+                    if (value.nominal < cardToMove.nominal)
+                        cardToMove = value;
+            var table = new Table();
+            table.AddOffCard(cardToMove);
+            return table;
         }
 
         public Table AdditionalMove(Table table, int enemyCardCount, List<Card> myHand)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            if (table.TablePosition.Count == 0)
+                throw new Exception("somthing went wrong in AdditionalMove :C");
+            foreach (var value in table.TablePosition)
+            {
+                if (myHand.Contains(value.DefCard) && value.DefCard.nominal != Program.trumpCard.nominal)
+                    foreach (var value2 in myHand)
+                        if (value2.nominal == value.DefCard.nominal && enemyCardCount != 0)
+                        {
+                            table.AddOffCard(value2);
+                            enemyCardCount--;
+                        }
+                if (myHand.Contains(value.OffCard) && value.OffCard.nominal != Program.trumpCard.nominal)
+                    foreach (var value2 in myHand)
+                        if (value2.nominal == value.OffCard.nominal && enemyCardCount != 0)
+                        {
+                            table.AddOffCard(value2);
+                            enemyCardCount--;
+                        }
+            }
+            return table;
         }
 
         public Table Defend(Table table, int enemyCardCount, List<Card> myHand)
