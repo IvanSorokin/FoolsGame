@@ -9,7 +9,7 @@ namespace FoolsGame
     class Arbiter
     {
         public List<Card> FormInitialPack()
-        { //привет иван 8===э
+        {
 			var pack = new List<Card>(); //try to make a pack
             foreach (Suit suit in (Suit[])Enum.GetValues(typeof(Suit)))
                 foreach (Nominal nominal in (Nominal[])Enum.GetValues(typeof(Nominal)))

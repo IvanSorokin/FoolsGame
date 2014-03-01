@@ -6,18 +6,16 @@ using System.Threading.Tasks;
 
 namespace FoolsGame
 {
-    public enum Move {TakeCards, Transfer, Defend};
     interface IPlayer
     {
-        void FirstMove(int enemyCardCount); //offense realization
-        void AdditionalMove(int enemyCardCount); //additional moves if possible
-        void Defend(Table table); //player's reaction if he is under attack
+        Table FirstMove(int enemyCardCount, List<Card> myHand); //offense realization
+        Table AdditionalMove(Table table, int enemyCardCount, List<Card> myHand); //additional moves if possible
+        Table Defend(Table table, int enemyCardCount, List<Card> myHand); //player's reaction if he is under attack
     }
 
     class Player//:IPlayer
     {
         public List<Card> hand = new List<Card>();
-        public DefenseInfo defenseInfo;
         //and his methods
         //The most stupid bot ever.
         //Ходить с минимальной некозырной карты. Если таковой не имеется,
@@ -44,16 +42,15 @@ namespace FoolsGame
         }
 
     }
-    class DefenseInfo
-    {
-        //information about defense turns, players use it to make decisions
-        public int enemyCardCount = Program.players[Program.turn].hand.Count;
-        public List<PairCard> tableStat = Program.table.TablePosition;
-        public Move move;
-        public Move Move
-        {
-            get {return move;}
-            set { move = value; }
-        }
-    }
+    //class DefenseInfo
+    //{
+    //    //information about defense turns, players use it to make decisions
+    //    public int enemyCardCount = Program.players[Program.turn].hand.Count;
+    //    public List<PairCard> tableStat = Program.table.TablePosition;
+    //    public Move Move
+    //    {
+    //        get;
+    //        set;
+    //    }
+    //}
 }
