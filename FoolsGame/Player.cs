@@ -13,7 +13,7 @@ namespace FoolsGame
         Table Defend(Table table, int enemyCardCount, List<Card> myHand); //player's reaction if he is under attack
     }
 
-    class Player//:IPlayer
+    class Player:IPlayer
     {
         public List<Card> hand = new List<Card>();
         //and his methods
@@ -22,25 +22,29 @@ namespace FoolsGame
         //ходить с минимальной козырной. Если несколько минимальных карт
         //И у атакуемого игрока количество карт, не меньше, чем количество
         //карт, которые подходят под вышеописанные условия.
-        public void FirstMove()
-        {
-            throw new ArgumentException("");
-        }
+
         //Если есть возможность - у защищающегося есть карты на руках И
         //(есть подходящая некозырная карта ИЛИ на руках остались только
         //козыри и минимальный из них можно подкинуть без нарушения правил)
-        public void AdditionalMove()
-        {
-            throw new ArgumentException("");
-        }
+
         //Выбирается минимальная по номиналу из некозырных, которой можно
         //побить карту на столе (если такой карты нет, то искать минимальную
         //карту из козырных). Если нет возможности покрыть карту, то брать. #   
-        public void Defend()
+
+        public Table FirstMove(int enemyCardCount, List<Card> myHand)
         {
-            throw new ArgumentException("");
+            throw new NotImplementedException();
         }
 
+        public Table AdditionalMove(Table table, int enemyCardCount, List<Card> myHand)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Table Defend(Table table, int enemyCardCount, List<Card> myHand)
+        {
+            throw new NotImplementedException();
+        }
     }
     //class DefenseInfo
     //{

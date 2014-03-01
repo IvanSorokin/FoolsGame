@@ -20,7 +20,7 @@ namespace FoolsGame
 			return pack; //return a pack WITHOUT random, like a stock
         }
 
-        public List<Card> RandomizePack( List<Card> initPack)
+        void RandomizePack( List<Card> initPack)
         {
             var rand = new Random();
             for (var i = 0; i < initPack.Count(); i++)
@@ -30,18 +30,9 @@ namespace FoolsGame
                 initPack[i] = initPack[randomedPosition];
                 initPack[randomedPosition] = temp;
             }
-            return initPack; //sample of randomed pack
         }
 
-        public bool IsPossibleOffense(List<Card> playerHand, Table table )
-        {
-            //looking through player's hand and table position and checking
-            //and then make a decision: allow this turn or ban this player for cheating
-            //player give his hand and table position which he wanted to make*
-            return true;
-        }
-
-        public bool IsPossibleDefense(List<Card> playerHand, Table table)
+        public bool IsPossibleMove(List<Card> playerHand, Table table)
         {
             //looking through player's hand and table position and checking
             //and then make a decision: allow this turn or ban this player for cheating
@@ -54,9 +45,11 @@ namespace FoolsGame
             //append players hand with cards if necessary
         }
 
-        public void BanPlayer (Player player)
+        bool[] BannedPlayers = new bool[4];
+
+        public void BanPlayer (int numberOfPlayer)
         {
-            //give a ban to player
+            BannedPlayers[numberOfPlayer] = true;
         }
     }
 }
