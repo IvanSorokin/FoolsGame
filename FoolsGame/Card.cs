@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace FoolsGame
 {
     public enum Suit { spades, hearts, diamonds, clubs };
-    public enum Nominal { AAce = 8, KKing = 7, QQueen = 6, JJack = 5, TTen = 4, N9ine = 3, E8ight = 2, S7even = 1, S6hest = 0};
+    public enum Nominal { vA = 8, vK = 7, vQ = 6, vJ = 5, vT = 4, v9 = 3, v8 = 2, v7 = 1, v6 = 0};
 	//digits for more comfortable comp-s!
 
     public class Card

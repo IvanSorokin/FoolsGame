@@ -28,7 +28,6 @@ namespace FoolsGame
             }
 			return pack; */
         }
-
         public bool TryToMove(List<Card> playerHand, Table prevTable, Table desirableTable)
         {
             var removedCards = new List<Card>(); //check if all offcards were beaten
