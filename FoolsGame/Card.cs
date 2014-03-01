@@ -8,7 +8,7 @@ namespace FoolsGame
 {
     public enum Suit { Spades, Hearts, Diamonds, Clubs };
     public enum Nominal { Ace = 8, King = 7, Queen = 6, Jack = 5, Ten = 4, Nine = 3, Eight = 2, Seven = 1, Six = 0};
-    //digits for more comfortable comp-s
+	//digits for more comfortable comp-s!
 
     public class Card
     {

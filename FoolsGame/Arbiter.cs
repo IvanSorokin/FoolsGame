@@ -17,7 +17,7 @@ namespace FoolsGame
                     Card card = new Card(suit, nominal);
                     pack.Add(card);
                 }
-			return pack; //return a pack WITHOUT random, like a stock pack
+			return pack; //return a pack WITHOUT random, like a stock
         }
 
         public List<Card> RandomizePack( List<Card> initPack)
