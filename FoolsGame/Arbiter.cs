@@ -17,19 +17,15 @@ namespace FoolsGame
                     Card card = new Card(suit, nominal);
                     pack.Add(card);
                 }
-			return pack; //return a pack WITHOUT random, like a stock
-        }
-
-        void RandomizePack( List<Card> initPack)
-        {
             var rand = new Random();
-            for (var i = 0; i < initPack.Count(); i++)
+            for (var i = 0; i < pack.Count(); i++)
             {
-                var temp = initPack[i];
-                var randomedPosition = rand.Next(i, initPack.Count - 1);
-                initPack[i] = initPack[randomedPosition];
-                initPack[randomedPosition] = temp;
+                var temp = pack[i];
+                var randomedPosition = rand.Next(i, pack.Count - 1);
+                pack[i] = pack[randomedPosition];
+                pack[randomedPosition] = temp;
             }
+			return pack; 
         }
 
         public bool IsPossibleMove(List<Card> playerHand, Table table)
