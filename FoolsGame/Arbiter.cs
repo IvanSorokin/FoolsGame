@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,17 +8,16 @@ namespace FoolsGame
 {
     class Arbiter
     {
-        static public Dictionary<string,Card> FormInitialPack()
+        public List<Card> FormInitialPack()
         {
-            var pack = new Dictionary<string, Card>(); //try to make a pack
+			var pack = new List<Card>(); //try to make a pack
             foreach (Suit suit in (Suit[])Enum.GetValues(typeof(Suit)))
                 foreach (Nominal nominal in (Nominal[])Enum.GetValues(typeof(Nominal)))
                 {
                     Card card = new Card(suit, nominal);
-                    pack.Add(nominal.ToString()[1].ToString() + suit.ToString()[0].ToString(), card);
+                    pack.Add(card);
                 }
-            return pack;
-            /*var rand = new Random();
+            var rand = new Random();
             for (var i = 0; i < pack.Count(); i++)
             {
                 var temp = pack[i];
@@ -26,18 +25,12 @@ namespace FoolsGame
                 pack[i] = pack[randomedPosition];
                 pack[randomedPosition] = temp;
             }
-			return pack; */
+			return pack; 
         }
+
         public bool TryToMove(List<Card> playerHand, Table prevTable, Table desirableTable)
         {
             var removedCards = new List<Card>(); //check if all offcards were beaten
-            if (desirableTable.TablePosition.Count == 0)
-            {
-                foreach (var e in prevTable.TablePosition)
-                    playerHand.Add(e.OffCard);
-                return true;
-            }
-
             foreach (var pairOfCard in desirableTable.TablePosition)
                 if (playerHand.Contains(pairOfCard.DefCard)) removedCards.Add(pairOfCard.DefCard);
             if (removedCards.Count == desirableTable.TablePosition.Count)
@@ -73,11 +66,6 @@ namespace FoolsGame
         }
 
         bool[] BannedPlayers = new bool[4];
-
-        public bool IsOffCardBeaten(PairCard pair)
-        {
-            return pair.DefCard.nominal > pair.DefCard.nominal;
-        }
 
         public void BanPlayer (int numberOfPlayer)
         {
