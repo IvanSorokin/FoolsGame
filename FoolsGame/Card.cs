@@ -12,6 +12,18 @@ namespace FoolsGame
 
     public class Card
     {
+        public static bool operator==(Card a, Card b)
+        {
+            return a.nominal == b.nominal && a.suit == b.suit;
+        }
+        public override bool Equals(object a)
+        {
+            return this == (Card)a;
+        }
+        public static bool operator!=(Card a, Card b)
+        {
+            return !(a.nominal == b.nominal && a.suit == b.suit);
+        }
         public Suit suit
         {
             get;
