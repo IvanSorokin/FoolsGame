@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,7 +34,7 @@ namespace FoolsGame
         public Table FirstMove(int enemyCardCount, List<Card> myHand)
         {
             //throw new NotImplementedException();
-            var cardToMove = Program.defaultPack["A"+Program.charOfTrump];
+            var cardToMove = new Card(Program.trumpCard.suit, Nominal.Ace);
             foreach (var value in myHand)
                 if (value.suit != Program.trumpCard.suit && value.nominal <= cardToMove.nominal)
                     cardToMove = value;
