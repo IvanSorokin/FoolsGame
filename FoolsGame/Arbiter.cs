@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoolsGame
 {
-    class Arbiter
+    public class Arbiter
     {
         public List<Card> FormInitialPack()
         {
@@ -28,7 +28,7 @@ namespace FoolsGame
 			return pack; 
         }
 
-        public bool TryToMove(List<Card> playerHand, Table prevTable, Table desirableTable, int countOfDefenseCards)
+        static public bool TryToMove(List<Card> playerHand, Table prevTable, Table desirableTable, int countOfDefenseCards)
         {
             var removedCards = new List<Card>(); //check if all offcards were beaten
             if (desirableTable.TablePosition.Count - prevTable.TablePosition.Count == 1) //check tranfer
