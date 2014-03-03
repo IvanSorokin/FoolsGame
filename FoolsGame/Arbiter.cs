@@ -28,30 +28,40 @@ namespace FoolsGame
 			return pack; 
         }
 
-        public bool TryToMove(List<Card> playerHand, Table prevTable, Table desirableTable)
+        public bool TryToMove(List<Card> playerHand, Table prevTable, Table desirableTable, int countOfDefenseCards)
         {
             var removedCards = new List<Card>(); //check if all offcards were beaten
+            if (desirableTable.TablePosition.Count - prevTable.TablePosition.Count == 1) //check tranfer
+                if (playerHand.Contains(desirableTable.TablePosition[1].OffCard) && 
+                    desirableTable.TablePosition[1].OffCard.nominal == prevTable.TablePosition[0].OffCard.nominal)
+                {
+                    playerHand.Remove(desirableTable.TablePosition[1].OffCard);
+                    return true;
+                }
+                else
             foreach (var pairOfCard in desirableTable.TablePosition)
-                if (playerHand.Contains(pairOfCard.DefCard)) removedCards.Add(pairOfCard.DefCard);
+                if (playerHand.Contains(pairOfCard.DefCard) && IsPairBeaten(pairOfCard)) removedCards.Add(pairOfCard.DefCard);
             if (removedCards.Count == desirableTable.TablePosition.Count)
             {
                 foreach (var e in removedCards)
                     playerHand.Remove(e);
                 return true;
             }
-            else //if he transfer a card?
-            {
-                if (desirableTable.TablePosition.Count - prevTable.TablePosition.Count == 1)
-                    if (playerHand.Contains(desirableTable.TablePosition[1].OffCard))
-                    {
-                        playerHand.Remove(desirableTable.TablePosition[1].OffCard);
+            else 
+                if (desirableTable.TablePosition.Count <= countOfDefenseCards)
+                {
+                    foreach (var e in desirableTable.TablePosition)
+                        if (!playerHand.Contains(e.OffCard)) return false;
                         return true;
-                    }
-            }
-            //looking through player's hand and table position and checking
-            //and then make a decision: allow this turn or ban this player for cheating
-            //player give his hand and table position which he wanted to make*
+                }
             return false;
+        }
+
+        public bool IsPairBeaten(PairCard pair)
+        {
+            bool casualBeating = pair.DefCard.nominal > pair.OffCard.nominal && pair.OffCard.suit == pair.DefCard.suit;
+            bool trumpCasualBeating = pair.DefCard.suit == Program.trumpCard.suit && pair.DefCard.suit != pair.OffCard.suit;
+            return casualBeating || casualBeating;
         }
 
         public void GiveCardsToPlayer (Player player, List<Card> pack)
