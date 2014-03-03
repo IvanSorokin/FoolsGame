@@ -74,7 +74,22 @@ namespace FoolsGame
 
         public Table Defend(Table table, int enemyCardCount, List<Card> myHand)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            foreach (var value in table.TablePosition)
+                if (!value.IsBeaten())
+                {
+                    foreach (var value2 in myHand)
+                        if (value2.suit == value.OffCard.suit && value2.nominal > value.OffCard.nominal)
+                            value.DefCard = value2;
+                    if (value.IsBeaten())
+                        continue;
+                    foreach (var value2 in myHand)
+                        if (Program.trumpCard.suit == value2.suit && value.OffCard.suit != Program.trumpCard.suit)
+                            value.DefCard = value2;
+                    if (value.IsBeaten())
+                        return new Table(); //взять карты, вернуть пустой стол. арбитр разберется.
+                }
+            return table;
         }
     }
     //class DefenseInfo
