@@ -14,6 +14,7 @@ namespace FoolsGame
         static public Table table = new Table(); // стол один на всю игру
         static void Main(string[] args)
         {
+            //rollback
             var arbiter = new Arbiter();
             var pack = arbiter.FormInitialPack();
             trumpCard = pack[0];
