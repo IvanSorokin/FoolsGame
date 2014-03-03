@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoolsGame
 {
-    class Table //shit by FoKycHuK. Не меняйте код позязя не сказав мне :3 спасибо.
+    public class Table //shit by FoKycHuK. Не меняйте код позязя не сказав мне :3 спасибо.
     {
         private List<PairCard> tablePosition = new List<PairCard>(); //скрытый лист, содержащий, собсно, пары.
         public void AddOffCard(Card offCard) //добавление карты в лист, нападение. 
@@ -30,7 +30,7 @@ namespace FoolsGame
             get {return tablePosition;}
         }
     }
-    class PairCard // Вместо Tuple
+    public class PairCard // Вместо Tuple
     {
         public Card OffCard
         {

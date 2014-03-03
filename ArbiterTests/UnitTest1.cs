@@ -13,7 +13,9 @@ namespace FoolsGame
             var hand = new List<Card>(){new Card(Suit.Clubs, Nominal.Ten)};
             var attack = new Card(Suit.Clubs, Nominal.Eight);
             var defense = new Card(Suit.Clubs, Nominal.Ten);
-            var des = new Ta
+            var desirableTable = new Table();
+            desirableTable.AddOffCard(attack);
+            desirableTable.AddDefCard(defense,0);
             Assert.AreEqual(Arbiter.TryToMove(hand, desirableTable, desirableTable, 1), true);
         }
     }

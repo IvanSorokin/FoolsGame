@@ -57,14 +57,14 @@ namespace FoolsGame
             return false;
         }
 
-        public bool IsPairBeaten(PairCard pair)
+        static public bool IsPairBeaten(PairCard pair)
         {
             bool casualBeating = pair.DefCard.nominal > pair.OffCard.nominal && pair.OffCard.suit == pair.DefCard.suit;
             bool trumpCasualBeating = pair.DefCard.suit == Program.trumpCard.suit && pair.DefCard.suit != pair.OffCard.suit;
             return casualBeating || casualBeating;
         }
 
-        public void GiveCardsToPlayer (Player player, List<Card> pack)
+        /*static public void GiveCardsToPlayer (Player player, List<Card> pack)
         {
             while (player.hand.Count < 6)
             {
@@ -73,7 +73,7 @@ namespace FoolsGame
                 pack.Remove(card);
             }
             //append players hand with cards if necessary
-        }
+        } */
 
         bool[] BannedPlayers = new bool[4];
 
