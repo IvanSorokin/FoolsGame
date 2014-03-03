@@ -16,9 +16,7 @@ namespace FoolsGame
         static public Table table = new Table(); // стол один на всю игру
         static void Main(string[] args)
         {
-            var pack = new List<Card>();
-            trumpCard = pack[0];
-            charOfTrump = trumpCard.suit.ToString()[0].ToString();
+            //rollback
             var arbiter = new Arbiter();
             Console.ReadKey();
             
