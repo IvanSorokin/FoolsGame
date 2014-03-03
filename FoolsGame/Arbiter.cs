@@ -28,27 +28,33 @@ namespace FoolsGame
 			return pack; 
         }
 
-        static public bool TryToMove(List<Card> playerHand, Table prevTable, Table desirableTable, int countOfDefenseCards)
+        static public bool TryToDefense(List<Card> playerHand, Table prevTable, Table desirableTable)
         {
             var removedCards = new List<Card>(); //check if all offcards were beaten
-            if (desirableTable.TablePosition.Count - prevTable.TablePosition.Count == 1) //check tranfer
-                if (playerHand.Contains(desirableTable.TablePosition[1].OffCard) && 
+            if (desirableTable.TablePosition.Count - prevTable.TablePosition.Count == 1)
+            {//check tranfer
+                if (playerHand.Contains(desirableTable.TablePosition[1].OffCard) &&
                     desirableTable.TablePosition[1].OffCard.nominal == prevTable.TablePosition[0].OffCard.nominal)
                 {
                     playerHand.Remove(desirableTable.TablePosition[1].OffCard);
                     return true;
                 }
-                else
-            foreach (var pairOfCard in desirableTable.TablePosition)
-                if (playerHand.Contains(pairOfCard.DefCard) && IsPairBeaten(pairOfCard)) removedCards.Add(pairOfCard.DefCard);
+            }
+            else
+                foreach (var pairOfCard in desirableTable.TablePosition)
+                    if (playerHand.Contains(pairOfCard.DefCard) && IsPairBeaten(pairOfCard)) removedCards.Add(pairOfCard.DefCard);
             if (removedCards.Count == desirableTable.TablePosition.Count)
             {
                 foreach (var e in removedCards)
                     playerHand.Remove(e);
                 return true;
             }
-            else 
-                if (desirableTable.TablePosition.Count <= countOfDefenseCards)
+            return false;
+        }
+
+        static public bool TryToAttack(List<Card> playerHand, Table desirableTable, int countOfDefenseCards)
+        {
+            if (desirableTable.TablePosition.Count <= countOfDefenseCards)
                 {
                     foreach (var e in desirableTable.TablePosition)
                         if (!playerHand.Contains(e.OffCard)) return false;
@@ -61,7 +67,7 @@ namespace FoolsGame
         {
             bool casualBeating = pair.DefCard.nominal > pair.OffCard.nominal && pair.OffCard.suit == pair.DefCard.suit;
             bool trumpCasualBeating = pair.DefCard.suit == Program.trumpCard.suit && pair.DefCard.suit != pair.OffCard.suit;
-            return casualBeating || casualBeating;
+            return casualBeating || trumpCasualBeating;
         }
 
         /*static public void GiveCardsToPlayer (Player player, List<Card> pack)
