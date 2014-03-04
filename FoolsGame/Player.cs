@@ -95,10 +95,9 @@ namespace FoolsGame
                         if (Program.trumpCard.suit == value2.suit && value.OffCard.suit != Program.trumpCard.suit)
                             value.DefCard = value2;
                     if (value.IsBeaten())
-                    {
-                        table.Clear(); //взять карты, вернуть пустой стол. арбитр разберется.
-                        return table;
-                    }
+                        continue;
+                    table.Clear(); //взять карты, вернуть пустой стол. арбитр разберется.
+                    return table;
                 }
             return table;
         }
