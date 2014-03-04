@@ -42,7 +42,8 @@ namespace FoolsGame
             }
             else
                 foreach (var pairOfCard in desirableTable.TablePosition)
-                    if (playerHand.Contains(pairOfCard.DefCard) && IsPairBeaten(pairOfCard)) removedCards.Add(pairOfCard.DefCard);
+                    if (playerHand.Contains(pairOfCard.DefCard) && IsPairBeaten(pairOfCard)) 
+                        removedCards.Add(pairOfCard.DefCard);
             if (removedCards.Count == desirableTable.TablePosition.Count)
             {
                 foreach (var e in removedCards)
