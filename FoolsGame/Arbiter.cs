@@ -8,7 +8,7 @@ namespace FoolsGame
 {
     public class Arbiter
     {
-        static public List<Card> FormInitialPack()
+        static public Stack<Card> FormInitialPack()
         {
 			var pack = new List<Card>(); //try to make a pack
             foreach (Suit suit in (Suit[])Enum.GetValues(typeof(Suit)))
@@ -17,6 +17,7 @@ namespace FoolsGame
                     Card card = new Card(suit, nominal);
                     pack.Add(card);
                 }
+            var finalStack = new Stack<Card>();
             var rand = new Random();
             for (var i = 0; i < pack.Count(); i++)
             {
@@ -24,8 +25,9 @@ namespace FoolsGame
                 var randomedPosition = rand.Next(i, pack.Count - 1);
                 pack[i] = pack[randomedPosition];
                 pack[randomedPosition] = temp;
+                finalStack.Push(pack[i]);
             }
-			return pack; 
+			return finalStack; 
         }
 
         static public Table TryToDefense(List<Card> playerHand, Table prevTable, Table desirableTable)
@@ -56,7 +58,6 @@ namespace FoolsGame
                     playerHand.Remove(e);
                 return desirableTable;
             }
-            throw new ArgumentException("");
             return prevTable;
         }
 
@@ -78,15 +79,10 @@ namespace FoolsGame
             return casualBeating || trumpCasualBeating;
         }
 
-        static public void GiveCardsToPlayer (Player player, List<Card> pack)
+        static public void GiveCardsToPlayer (Player player, Stack<Card> pack)
         {
             while (pack.Count > 0 && player.hand.Count < 6)
-            {
-                var card = pack[pack.Count - 1];
-                player.hand.Add(card);
-                pack.Remove(card);
-            }
-            //append players hand with cards if necessary
+                player.hand.Add(pack.Pop());
         } 
 
         bool[] BannedPlayers = new bool[4];
