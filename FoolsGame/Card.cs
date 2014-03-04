@@ -41,5 +41,12 @@ namespace FoolsGame
             suit = _suit;
             nominal = _nominal;
         }
+
+
+
+        public static Card[] Make(params string[] names)
+        {
+            return null;
+        }
     }
 }
