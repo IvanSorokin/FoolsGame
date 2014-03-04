@@ -74,20 +74,31 @@ namespace FoolsGame
 
         public Table Defend(Table table, int enemyCardCount, List<Card> myHand)
         {
-            //throw new NotImplementedException();
-            foreach (var value in table.TablePosition)
+            if (table.TablePosition.Count == 0)
+                throw new Exception("somthing went wrong in Defend :C");
+            if (table.TablePosition.Count == 1) //перевод, если карта одна
+                foreach (var value in myHand)
+                    if (value.nominal == table.TablePosition[0].OffCard.nominal)
+                    {
+                        table.AddOffCard(value);
+                        return table;
+                    }
+            foreach (var value in table.TablePosition) 
                 if (!value.IsBeaten())
                 {
-                    foreach (var value2 in myHand)
+                    foreach (var value2 in myHand) //попытка отбиться с помощью не-козыря 
                         if (value2.suit == value.OffCard.suit && value2.nominal > value.OffCard.nominal)
                             value.DefCard = value2;
                     if (value.IsBeaten())
                         continue;
-                    foreach (var value2 in myHand)
+                    foreach (var value2 in myHand) //попытка отбиться с помозью козыря
                         if (Program.trumpCard.suit == value2.suit && value.OffCard.suit != Program.trumpCard.suit)
                             value.DefCard = value2;
                     if (value.IsBeaten())
-                        return new Table(); //взять карты, вернуть пустой стол. арбитр разберется.
+                    {
+                        table.Clear(); //взять карты, вернуть пустой стол. арбитр разберется.
+                        return table;
+                    }
                 }
             return table;
         }
