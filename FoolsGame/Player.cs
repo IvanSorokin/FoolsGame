@@ -13,7 +13,7 @@ namespace FoolsGame
         Table Defend(Table table, int enemyCardCount, List<Card> myHand); //player's reaction if he is under attack
     }
 
-    class Player:IPlayer
+    public class Player:IPlayer
     {
         public List<Card> hand = new List<Card>();
         //and his methods
