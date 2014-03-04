@@ -8,7 +8,7 @@ namespace FoolsGame
 {
     public class Arbiter
     {
-        public List<Card> FormInitialPack()
+        static public List<Card> FormInitialPack()
         {
 			var pack = new List<Card>(); //try to make a pack
             foreach (Suit suit in (Suit[])Enum.GetValues(typeof(Suit)))
@@ -28,16 +28,23 @@ namespace FoolsGame
 			return pack; 
         }
 
-        static public bool TryToDefense(List<Card> playerHand, Table prevTable, Table desirableTable)
+        static public Table TryToDefense(List<Card> playerHand, Table prevTable, Table desirableTable)
         {
             var removedCards = new List<Card>(); //check if all offcards were beaten
+            if (desirableTable.TablePosition.Count == 0)
+            {
+                foreach (var e in prevTable.TablePosition)
+                    playerHand.Add(e.OffCard);
+                return desirableTable;
+            }
+            else
             if (desirableTable.TablePosition.Count - prevTable.TablePosition.Count == 1)
             {//check tranfer
                 if (playerHand.Contains(desirableTable.TablePosition[1].OffCard) &&
                     desirableTable.TablePosition[1].OffCard.nominal == prevTable.TablePosition[0].OffCard.nominal)
                 {
                     playerHand.Remove(desirableTable.TablePosition[1].OffCard);
-                    return true;
+                    return desirableTable;
                 }
             }
             else
@@ -47,20 +54,21 @@ namespace FoolsGame
             {
                 foreach (var e in removedCards)
                     playerHand.Remove(e);
-                return true;
+                return desirableTable;
             }
-            return false;
+            throw new ArgumentException("");
+            return prevTable;
         }
 
-        static public bool TryToAttack(List<Card> playerHand, Table desirableTable, int countOfDefenseCards)
+        static public Table TryToAttack(List<Card> playerHand, Table desirableTable, int countOfDefenseCards)
         {
             if (desirableTable.TablePosition.Count <= countOfDefenseCards)
                 {
                     foreach (var e in desirableTable.TablePosition)
-                        if (!playerHand.Contains(e.OffCard)) return false;
-                        return true;
+                        if (!playerHand.Contains(e.OffCard)) throw new ArgumentException("");
+                        return desirableTable;
                 }
-            return false;
+            return desirableTable; // will be changed
         }
 
         static public bool IsPairBeaten(PairCard pair)
@@ -70,16 +78,16 @@ namespace FoolsGame
             return casualBeating || trumpCasualBeating;
         }
 
-        /*static public void GiveCardsToPlayer (Player player, List<Card> pack)
+        static public void GiveCardsToPlayer (Player player, List<Card> pack)
         {
-            while (player.hand.Count < 6)
+            while (pack.Count > 0 && player.hand.Count < 6)
             {
                 var card = pack[pack.Count - 1];
                 player.hand.Add(card);
                 pack.Remove(card);
             }
             //append players hand with cards if necessary
-        } */
+        } 
 
         bool[] BannedPlayers = new bool[4];
 

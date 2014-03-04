@@ -67,5 +67,17 @@ namespace FoolsGame
             desirableTable.AddDefCard(defense,0);
             Assert.AreEqual(Arbiter.TryToDefense(hand, desirableTable, desirableTable), true);
         }
+
+        [TestMethod]
+        public void TakeCards()
+        {
+            Program.trumpCard = new Card(Suit.Diamonds, Nominal.Ace);
+            var hand = new List<Card>() { new Card(Suit.Diamonds, Nominal.Eight) };
+            var attack = new Card(Suit.Clubs, Nominal.Eight);
+            var prevTable = new Table();
+            var desTable = new Table();
+            prevTable.AddOffCard(attack);
+            Assert.AreEqual(Arbiter.TryToDefense(hand, prevTable, desTable), true);
+        }
     }
 }
