@@ -30,14 +30,14 @@ namespace FoolsGame
 			return finalStack; 
         }
 
-        static public Table TryToDefense(List<Card> playerHand, Table prevTable, Table desirableTable)
+        static public bool TryToDefense(List<Card> playerHand, Table prevTable, Table desirableTable)
         {
             var removedCards = new List<Card>(); //check if all offcards were beaten
             if (desirableTable.TablePosition.Count == 0)
             {
                 foreach (var e in prevTable.TablePosition)
                     playerHand.Add(e.OffCard);
-                return desirableTable;
+                return true;
             }
             else
             if (desirableTable.TablePosition.Count - prevTable.TablePosition.Count == 1)
@@ -46,7 +46,7 @@ namespace FoolsGame
                     desirableTable.TablePosition[1].OffCard.nominal == prevTable.TablePosition[0].OffCard.nominal)
                 {
                     playerHand.Remove(desirableTable.TablePosition[1].OffCard);
-                    return desirableTable;
+                    return true;
                 }
             }
             else
@@ -56,20 +56,20 @@ namespace FoolsGame
             {
                 foreach (var e in removedCards)
                     playerHand.Remove(e);
-                return desirableTable;
+                return true;
             }
-            return prevTable;
+            return false;
         }
 
-        static public Table TryToAttack(List<Card> playerHand, Table desirableTable, int countOfDefenseCards)
+        static public bool TryToAttack(List<Card> playerHand, Table desirableTable, int countOfDefenseCards)
         {
             if (desirableTable.TablePosition.Count <= countOfDefenseCards)
                 {
                     foreach (var e in desirableTable.TablePosition)
-                        if (!playerHand.Contains(e.OffCard)) throw new ArgumentException("");
-                        return desirableTable;
+                        if (!playerHand.Contains(e.OffCard)) return false;
+                        return true;
                 }
-            return desirableTable; // will be changed
+            return false; // will be changed
         }
 
         static public bool IsPairBeaten(PairCard pair)

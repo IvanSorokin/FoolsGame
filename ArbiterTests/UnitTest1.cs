@@ -14,6 +14,7 @@ namespace FoolsGame
             var attack = new Card(Suit.Clubs, Nominal.Eight);
             var defense = new Card(Suit.Clubs, Nominal.Ten);
             var desirableTable = new Table();
+            var prevTable = new Table();
             Program.trumpCard = new Card(Suit.Diamonds, Nominal.Ace);
             desirableTable.AddOffCard(attack);
             desirableTable.AddDefCard(defense,0);
