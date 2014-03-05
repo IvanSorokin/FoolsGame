@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Arbiter.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="MoveInfo.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
