@@ -42,11 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arbiter.cs" />
+    <Compile Include="AttackResponse.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Protocol\AttackInfo.cs" />
+    <Compile Include="Protocol\AttackResponse.cs" />
+    <Compile Include="Protocol\DefendResponse.cs" />
+    <Compile Include="Protocol\MoveInfo.cs" />
     <Compile Include="Table.cs" />
   </ItemGroup>
   <ItemGroup>

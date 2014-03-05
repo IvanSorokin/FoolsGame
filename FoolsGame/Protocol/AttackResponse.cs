@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace FoolsGame
 {
-    class AttackInfo
+    class AttackResponse
     {
+        public List<Card> OffCards;
+        public List<Card> PlayerHand;
+        public Table CurrentTable;
     }
 }
