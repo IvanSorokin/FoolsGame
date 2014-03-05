@@ -8,7 +8,7 @@ namespace FoolsGame
 {
     public class Arbiter
     {
-        public List<Card> FormInitialPack()
+        static public Stack<Card> FormInitialPack()
         {
 			var pack = new List<Card>(); //try to make a pack
             foreach (Suit suit in (Suit[])Enum.GetValues(typeof(Suit)))
@@ -17,6 +17,7 @@ namespace FoolsGame
                     Card card = new Card(suit, nominal);
                     pack.Add(card);
                 }
+            var finalStack = new Stack<Card>();
             var rand = new Random();
             for (var i = 0; i < pack.Count(); i++)
             {
@@ -24,13 +25,21 @@ namespace FoolsGame
                 var randomedPosition = rand.Next(i, pack.Count - 1);
                 pack[i] = pack[randomedPosition];
                 pack[randomedPosition] = temp;
+                finalStack.Push(pack[i]);
             }
-			return pack; 
+			return finalStack; 
         }
 
         static public bool TryToDefense(List<Card> playerHand, Table prevTable, Table desirableTable)
         {
             var removedCards = new List<Card>(); //check if all offcards were beaten
+            if (desirableTable.TablePosition.Count == 0)
+            {
+                foreach (var e in prevTable.TablePosition)
+                    playerHand.Add(e.OffCard);
+                return true;
+            }
+            else
             if (desirableTable.TablePosition.Count - prevTable.TablePosition.Count == 1)
             {//check tranfer
                 if (playerHand.Contains(desirableTable.TablePosition[1].OffCard) &&
@@ -61,7 +70,7 @@ namespace FoolsGame
                         if (!playerHand.Contains(e.OffCard)) return false;
                         return true;
                 }
-            return false;
+            return false; // will be changed
         }
 
         static public bool IsPairBeaten(PairCard pair)
@@ -71,16 +80,11 @@ namespace FoolsGame
             return casualBeating || trumpCasualBeating;
         }
 
-        /*static public void GiveCardsToPlayer (Player player, List<Card> pack)
+        static public void GiveCardsToPlayer (Player player, Stack<Card> pack)
         {
-            while (player.hand.Count < 6)
-            {
-                var card = pack[pack.Count - 1];
-                player.hand.Add(card);
-                pack.Remove(card);
-            }
-            //append players hand with cards if necessary
-        } */
+            while (pack.Count > 0 && player.hand.Count < 6)
+                player.hand.Add(pack.Pop());
+        } 
 
         bool[] BannedPlayers = new bool[4];
 
