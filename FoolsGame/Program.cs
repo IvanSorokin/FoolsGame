@@ -8,12 +8,14 @@ namespace FoolsGame
 {
     public class Program
     {
+
         static public Card trumpCard;//козырь
         static public int countOfPlayer = 2;
         static public Player[] players; //массив игроков, один на всю программу
         static public int turn; //ход НА КОГО ходят, один на всю программу
         static public Table table = new Table(); // стол один на всю игру
-        static public Stack<Card> pack; 
+        static public Stack<Card> pack;
+        static public Dictionary<string, Card> defaultPack = FormDict(); //словарь со всеми картами.
         static void Main(string[] args)
         {
             Console.WriteLine("Let's play!"); 
@@ -39,7 +41,36 @@ namespace FoolsGame
             {
                 //тут типа ход игры)))
             }
-            //rollback
+        }
+        static Dictionary<string, Card> FormDict()
+        {
+            var pack = new Dictionary<string, Card>(); //try to make a pack
+              foreach (Suit suit in (Suit[])Enum.GetValues(typeof(Suit)))
+                  foreach (Nominal nominal in (Nominal[])Enum.GetValues(typeof(Nominal)))
+                  {
+                      Card card = new Card(suit, nominal);
+                      char c;
+                      switch (nominal.ToString())
+                      {
+                          case "Six":
+                              c = '6';
+                              break;
+                          case "Seven":
+                              c = '7';
+                              break;
+                          case "Eight":
+                              c = '8';
+                              break;
+                          case "Nine":
+                              c = '9';
+                              break;
+                          default:
+                              c = nominal.ToString()[0];
+                              break;
+                      }
+                      pack.Add(c.ToString() + suit.ToString()[0].ToString().ToLower(), card);
+                  }
+              return pack;
         }
     }
 }
