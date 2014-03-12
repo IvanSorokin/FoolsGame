@@ -8,9 +8,9 @@ namespace FoolsGame
 {
     interface IPlayer
     {
-        Table FirstMove(int enemyCardCount, List<Card> myHand); //offense realization
-        Table AdditionalMove(Table table, int enemyCardCount, List<Card> myHand); //additional moves if possible
-        Table Defend(Table table, int enemyCardCount, List<Card> myHand); //player's reaction if he is under attack
+        AttackResponse FirstMove(MoveInfo move); //offense realization
+        AttackResponse AdditionalMove(MoveInfo move); //additional moves if possible
+        DefendInfo Defend(MoveInfo move); //player's reaction if he is under attack
     }
 
     public class Player:IPlayer
@@ -31,75 +31,83 @@ namespace FoolsGame
         //побить карту на столе (если такой карты нет, то искать минимальную
         //карту из козырных). Если нет возможности покрыть карту, то брать. #   
 
-        public Table FirstMove(int enemyCardCount, List<Card> myHand)
+        public AttackResponse FirstMove(MoveInfo moveInfo)
         {
             //throw new NotImplementedException();
             var cardToMove = new Card(Program.trumpCard.suit, Nominal.Ace);
-            foreach (var value in myHand)
+            foreach (var value in moveInfo.PlayerHand)
                 if (value.suit != Program.trumpCard.suit && value.nominal <= cardToMove.nominal)
                     cardToMove = value;
             if (cardToMove.suit == Program.trumpCard.suit)
-                foreach (var value in myHand)
+                foreach (var value in moveInfo.PlayerHand)
                     if (value.nominal < cardToMove.nominal)
                         cardToMove = value;
-            var table = new Table();
-            table.AddOffCard(cardToMove);
-            return table;
+            var response = new AttackResponse();
+            response.OffCards = new List<Card>();
+            response.OffCards.Add(cardToMove);
+            return response;
         }
 
-        public Table AdditionalMove(Table table, int enemyCardCount, List<Card> myHand)
+        public AttackResponse AdditionalMove(MoveInfo moveInfo)//Table table, int enemyCardCount, List<Card> myHand)
         {
             //throw new NotImplementedException();
-            if (table.TablePosition.Count == 0)
+            var response = new AttackResponse();
+            response.OffCards = new List<Card>();
+            var enemyCardCount = moveInfo.CountOfDefenseCards;
+            if (moveInfo.CurrentTable.TablePosition.Count == 0)
                 throw new Exception("somthing went wrong in AdditionalMove :C");
-            foreach (var value in table.TablePosition)
+            foreach (var value in moveInfo.CurrentTable.TablePosition)
             {
-                if (myHand.Contains(value.DefCard) && value.DefCard.nominal != Program.trumpCard.nominal)
-                    foreach (var value2 in myHand)
+                if (moveInfo.PlayerHand.Contains(value.DefCard) && value.DefCard.nominal != Program.trumpCard.nominal)
+                    foreach (var value2 in moveInfo.PlayerHand)
                         if (value2.nominal == value.DefCard.nominal && enemyCardCount != 0)
                         {
-                            table.AddOffCard(value2);
+                            response.OffCards.Add(value2);
                             enemyCardCount--;
                         }
-                if (myHand.Contains(value.OffCard) && value.OffCard.nominal != Program.trumpCard.nominal)
-                    foreach (var value2 in myHand)
+                if (moveInfo.PlayerHand.Contains(value.OffCard) && value.OffCard.nominal != Program.trumpCard.nominal)
+                    foreach (var value2 in moveInfo.PlayerHand)
                         if (value2.nominal == value.OffCard.nominal && enemyCardCount != 0)
                         {
-                            table.AddOffCard(value2);
+                            response.OffCards.Add(value2);
                             enemyCardCount--;
                         }
             }
-            return table;
+            return response;
         }
 
-        public Table Defend(Table table, int enemyCardCount, List<Card> myHand)
+        public DefendInfo Defend(MoveInfo moveInfo)//Table table, int enemyCardCount, List<Card> myHand)
         {
-            if (table.TablePosition.Count == 0)
-                throw new Exception("somthing went wrong in Defend :C");
+            var info = new DefendInfo();
+            info.BeatenCards = new List<Card>();
+            var table = moveInfo.CurrentTable;
+            var myHand = moveInfo.PlayerHand;
             if (table.TablePosition.Count == 1) //перевод, если карта одна
                 foreach (var value in myHand)
                     if (value.nominal == table.TablePosition[0].OffCard.nominal)
                     {
-                        table.AddOffCard(value);
-                        return table;
+                        info.BeatenCards.Add(value);
+                        info.Move = WhatMove.Translate;
+                        return info;
                     }
             foreach (var value in table.TablePosition) 
                 if (!value.IsBeaten())
                 {
                     foreach (var value2 in myHand) //попытка отбиться с помощью не-козыря 
                         if (value2.suit == value.OffCard.suit && value2.nominal > value.OffCard.nominal)
-                            value.DefCard = value2;
+                            info.BeatenCards.Add(value2);
                     if (value.IsBeaten())
                         continue;
                     foreach (var value2 in myHand) //попытка отбиться с помозью козыря
                         if (Program.trumpCard.suit == value2.suit && value.OffCard.suit != Program.trumpCard.suit)
-                            value.DefCard = value2;
+                            info.BeatenCards.Add(value2);
                     if (value.IsBeaten())
                         continue;
                     table.Clear(); //взять карты, вернуть пустой стол. арбитр разберется.
-                    return table;
+                    info.Move = WhatMove.Take;
+                    return info;
                 }
-            return table;
+            return info;
         }
     }
     //class DefenseInfo

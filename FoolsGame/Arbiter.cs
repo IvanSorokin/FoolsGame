@@ -30,47 +30,58 @@ namespace FoolsGame
 			return finalStack; 
         }
 
-        static public bool TryToDefense(List<Card> playerHand, Table prevTable, Table desirableTable)
+        static public void TryToDefense(DefendInfo defend)
         {
-            var removedCards = new List<Card>(); //check if all offcards were beaten
-            if (desirableTable.TablePosition.Count == 0)
+            if (defend.Move == WhatMove.Take)
             {
-                foreach (var e in prevTable.TablePosition)
-                    playerHand.Add(e.OffCard);
-                return true;
+                foreach (var e in Program.table.TablePosition)
+                    Program.players[Program.turn].hand.Add(e.OffCard);
             }
-            else
-            if (desirableTable.TablePosition.Count - prevTable.TablePosition.Count == 1)
-            {//check tranfer
-                if (playerHand.Contains(desirableTable.TablePosition[1].OffCard) &&
-                    desirableTable.TablePosition[1].OffCard.nominal == prevTable.TablePosition[0].OffCard.nominal)
-                {
-                    playerHand.Remove(desirableTable.TablePosition[1].OffCard);
-                    return true;
+            if (defend.Move == WhatMove.Defend)
+            {
+                int i = 0;
+                for (; i < Program.table.TablePosition.Count; i++)
+                    if (!Program.table.TablePosition[i].IsBeaten())
+                        break;
+                if (Program.table.TablePosition.Count - i - 1 != defend.BeatenCards.Count)
+                    throw new Exception();//это я не знаю. возможно, будем давать отбиваться не до конца...
+                for (int j = 0; j < Program.table.TablePosition.Count; j++)
+                {//вот я не знаю, как по-другому это написать... если есть идеи - скажите
+                    var inHand = Program.players[Program.turn].hand.Contains(defend.BeatenCards[j]);
+                    var sameSuit = Program.table.TablePosition[i + j].OffCard.suit == defend.BeatenCards[j].suit;
+                    var lessNominal = Program.table.TablePosition[i + j].OffCard.nominal > defend.BeatenCards[j].nominal;
+                    var isTrump = defend.BeatenCards[j].suit == Program.trumpCard.suit;
+                    if (!inHand ||
+                        (sameSuit && lessNominal) ||
+                        (!sameSuit && !isTrump) )
+                            throw new Exception();
+                    Program.players[Program.turn].hand.Remove(defend.BeatenCards[j]);
+                    Program.table.TablePosition[i + j].DefCard = defend.BeatenCards[j];
                 }
             }
-            else
-                foreach (var pairOfCard in desirableTable.TablePosition)
-                    if (playerHand.Contains(pairOfCard.DefCard) && IsPairBeaten(pairOfCard)) 
-                        removedCards.Add(pairOfCard.DefCard);
-            if (removedCards.Count == desirableTable.TablePosition.Count)
+            if (defend.Move == WhatMove.Translate)
             {
-                foreach (var e in removedCards)
-                    playerHand.Remove(e);
-                return true;
+                foreach (var e in defend.BeatenCards)//каждый раз достаем, поэтому он не положит 2 одинаковые карты
+                    if (!Program.players[Program.turn].hand.Contains(e))
+                        throw new Exception();
+                    else
+                    {
+                        Program.table.TablePosition.Add(new PairCard() { OffCard = e, DefCard = null });
+                        Program.players[Program.turn].hand.Remove(e);
+                    }
             }
-            return false;
         }
 
-        static public bool TryToAttack(List<Card> playerHand, Table desirableTable, int countOfDefenseCards)
+        static public void TryToAttack(AttackResponse attack, int whoAttack)
         {
-            if (desirableTable.TablePosition.Count <= countOfDefenseCards)
-                {
-                    foreach (var e in desirableTable.TablePosition)
-                        if (!playerHand.Contains(e.OffCard)) return false;
-                        return true;
-                }
-            return false; // will be changed
+            if (attack.OffCards.Count <= Program.players[whoAttack].hand.Count)
+                foreach (var e in attack.OffCards)
+                    if (!Program.players[whoAttack].hand.Contains(e))
+                        throw new Exception();
+                    else
+                        Program.players[whoAttack].hand.Remove(e);
+            else
+                throw new Exception(); // will be changed
         }
 
         static public bool IsPairBeaten(PairCard pair)

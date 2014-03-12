@@ -37,9 +37,35 @@ namespace FoolsGame
                         break;
                     }
             }
+            bool t = false;
             while (true)
             {
-                //тут типа ход игры)))
+                if (t)
+                    break;
+                AttackResponse firstAttack = players[(turn - 1 + countOfPlayer) % countOfPlayer].FirstMove(
+                    new MoveInfo() { CurrentTable = table, PlayerHand = players[(turn - 1 + countOfPlayer) % countOfPlayer].hand, Suit = trumpCard.suit });
+                Arbiter.TryToAttack(firstAttack, (turn - 1 + countOfPlayer) % countOfPlayer);
+                while (true)//Пока что понятия не имею, когда это закончить. нужна помощь
+                {
+                    DefendInfo defend = players[turn].Defend(
+                        new MoveInfo() { CurrentTable = table, PlayerHand = players[(turn - 1 + countOfPlayer) % countOfPlayer].hand, Suit = trumpCard.suit });
+                    if (defend.Move == WhatMove.Translate)
+                    {
+                        turn += 1;
+                        continue;
+                    }
+                    if (defend.Move == WhatMove.Take)
+                    {
+                        turn = (turn + 2) % countOfPlayer;
+                        break;
+                    }
+                    AttackResponse addAttack = players[(turn + 1) % countOfPlayer].AdditionalMove(
+                        new MoveInfo() { CurrentTable = table, PlayerHand = players[(turn - 1 + countOfPlayer) % countOfPlayer].hand, Suit = trumpCard.suit });
+                    Arbiter.TryToAttack(addAttack, (turn + 1) % countOfPlayer);
+                    addAttack = players[(turn - 1 + countOfPlayer) % countOfPlayer].AdditionalMove(
+                        new MoveInfo() { CurrentTable = table, PlayerHand = players[(turn - 1 + countOfPlayer) % countOfPlayer].hand, Suit = trumpCard.suit });
+                    Arbiter.TryToAttack(addAttack, (turn - 1 + countOfPlayer) % countOfPlayer);
+                }
             }
         }
         static Dictionary<string, Card> FormDict()
