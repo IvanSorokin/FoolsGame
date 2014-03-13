@@ -29,6 +29,17 @@ namespace FoolsGame
         {
             get {return tablePosition;}
         }
+        
+        /*
+        List<PairCard> Beaten; // я настаиваю что эти массивы лучше бы разделить
+        List<Card> Open;
+        
+        pu IEnumerable<Card> All
+        {
+            foreach(var e in Beaten) { yield return e.First; yield return e.Second; }
+            fore(var e in Open) yield return e;
+        }
+        */
     }
     public class PairCard // Вместо Tuple
     {
