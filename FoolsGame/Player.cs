@@ -13,6 +13,7 @@ namespace FoolsGame
         DefendInfo Defend(MoveInfo move); //player's reaction if he is under attack
     }
 
+//нужно больше LINQ!!!
     public class Player:IPlayer
     {
         public List<Card> hand = new List<Card>();
