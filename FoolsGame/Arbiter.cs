@@ -30,6 +30,14 @@ namespace FoolsGame
 			return finalStack; 
         }
 
+
+//РІСЃРµ СЌС‚Рё РјРµС‚РѕРґС‹ РґРѕР»Р¶РЅС‹ РїСЂРёРЅРёРјР°С‚СЊ РІ Р°СЂРіСѓРјРµРЅС‚Р°С… РІСЃРµ С‡С‚Рѕ РёРј РЅР°РґРѕ
+//TryToDefence(Hand, Triumph, Offence, Defence) -- РѕС‚РґРµР»СЊРЅРѕ СЃРґРµР»Р°С‚СЊ РјРµС‚РѕРґС‹ РґР»СЏ РїСЂРѕРІРµСЂРєРё РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё РїРµСЂРµРІРѕРґР°,
+// - РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё РїРѕРєСЂС‹С‚Рё CheckTransfer, CheckDefend
+//С‚РѕР»СЊРєРѕ РїСЂРѕРІРµСЂРєР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё
+
+// РёР·РјРµРЅРµРЅРёСЏ РІ РѕС‚РґРµР»СЊРЅРѕРј РјРµС‚РѕРґРµ, Рё РµРіРѕ РјРѕР¶РЅРѕ РЅРµ С‚РµСЃС‚РёСЂРѕРІР°С‚СЊ
+
         static public void TryToDefense(DefendInfo defend)
         {
             if (defend.Move == WhatMove.Take)
@@ -44,9 +52,9 @@ namespace FoolsGame
                     if (!Program.table.TablePosition[i].IsBeaten())
                         break;
                 if (Program.table.TablePosition.Count - i - 1 != defend.BeatenCards.Count)
-                    throw new Exception();//это я не знаю. возможно, будем давать отбиваться не до конца...
+                    throw new Exception();//пїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ...
                 for (int j = 0; j < Program.table.TablePosition.Count; j++)
-                {//вот я не знаю, как по-другому это написать... если есть идеи - скажите
+                {//пїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ... пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                     var inHand = Program.players[Program.turn].hand.Contains(defend.BeatenCards[j]);
                     var sameSuit = Program.table.TablePosition[i + j].OffCard.suit == defend.BeatenCards[j].suit;
                     var lessNominal = Program.table.TablePosition[i + j].OffCard.nominal > defend.BeatenCards[j].nominal;
@@ -61,7 +69,7 @@ namespace FoolsGame
             }
             if (defend.Move == WhatMove.Translate)
             {
-                foreach (var e in defend.BeatenCards)//каждый раз достаем, поэтому он не положит 2 одинаковые карты
+                foreach (var e in defend.BeatenCards)//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
                     if (!Program.players[Program.turn].hand.Contains(e))
                         throw new Exception();
                     else
